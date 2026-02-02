@@ -2,7 +2,7 @@
 - **Backend:** Java (Spring Boot)
 - **Frontend:** React (Vite)
 
-Installation:
+## Installation:
 ### Frontend
 - **Node.js 18**: 'https://nodejs.org/en'
 - Verify installation : `node -v` `npm-v`
