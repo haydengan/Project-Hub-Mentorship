@@ -1,0 +1,69 @@
+# name: workflow
+
+# on:
+#   push:
+#     branches: [main]
+#     paths:
+#       - "src/**"
+#       - "pom.xml"
+#       - "Dockerfile"
+
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       contents: read
+
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+
+#       - name: Setup JDK 17
+#         uses: actions/setup-java@v4
+#         with:
+#           distribution: temurin
+#           java-version: "17"
+#           cache: maven
+
+#       - name: Test
+#         run: mvn -B test
+
+#       - name: Build jar
+#         run: mvn -B package -DskipTests
+
+#       - name: Login to Docker Hub
+#         uses: docker/login-action@v3
+#         with:
+#           username: ${{ secrets.DOCKER_HUB_USERNAME }}
+#           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+#       - name: Set up Docker Buildx
+#         uses: docker/setup-buildx-action@v3
+
+#       - name: Docker metadata (tags/labels)
+#         id: meta
+#         uses: docker/metadata-action@v5
+#         with:
+#           images: ${{ secrets.DOCKER_HUB_USERNAME }}/spring-jwt-template
+#           tags: |
+#             type=raw,value=latest
+#             type=sha
+
+#       - name: Build and Push to Docker Hub
+#         uses: docker/build-push-action@v6
+#         with:
+#           context: .
+#           file: ./Dockerfile
+#           push: true
+#           tags: ${{ steps.meta.outputs.tags }}
+#           labels: ${{ steps.meta.outputs.labels }}
+#           cache-from: type=gha
+#           cache-to: type=gha,mode=max
+
+#       - name: Upload coverage to Codecov
+#         uses: codecov/codecov-action@v4
+#         with:
+#           # If your Codecov/GitHub integration supports tokenless uploads, you can remove the next line.
+#           token: ${{ secrets.CODECOV_TOKEN }}
+#           files: ./target/site/jacoco/jacoco.xml
+#           fail_ci_if_error: true
