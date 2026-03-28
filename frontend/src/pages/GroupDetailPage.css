@@ -1,0 +1,402 @@
+.group-detail {
+  min-height: 100vh;
+  background: #faf5f5;
+}
+
+/* Header */
+.group-detail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+}
+
+.group-detail-header h1 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.back-link {
+  font-size: 0.9rem;
+  color: #666;
+  text-decoration: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 16px;
+  border: 1px solid #ddd;
+  transition: all 0.2s;
+}
+
+.back-link:hover {
+  background: #f5f5f5;
+}
+
+.btn-leave {
+  padding: 0.4rem 0.8rem;
+  border-radius: 16px;
+  border: 1px solid #e0a0a0;
+  background: #fff;
+  color: #c75c5c;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-leave:hover {
+  background: #fdf0f0;
+}
+
+/* Group Info Bar */
+.group-info-bar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 0.8rem 2rem;
+  background: #fff;
+  border-bottom: 1px solid #eee;
+  flex-wrap: wrap;
+}
+
+.group-info-desc {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 0;
+  flex: 1;
+}
+
+.group-info-code {
+  font-size: 0.8rem;
+  color: #888;
+  font-family: monospace;
+}
+
+.group-info-code strong {
+  color: #1a1a1a;
+}
+
+.group-info-members {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+/* Log Section */
+.log-section {
+  padding: 1.2rem 2rem;
+  background: #fff;
+  margin: 1rem 2rem;
+  border-radius: 12px;
+  border: 1px solid #eee;
+}
+
+.log-section h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 0.8rem;
+}
+
+.log-form {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.log-form select,
+.log-form input {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  background: #f7f7f7;
+}
+
+.log-form select {
+  min-width: 160px;
+}
+
+.log-form input[type="number"] {
+  width: 90px;
+}
+
+.log-form input[type="text"] {
+  flex: 1;
+  min-width: 120px;
+}
+
+.log-form select:focus,
+.log-form input:focus {
+  outline: 2px solid #d4979a;
+  border-color: transparent;
+}
+
+.btn-log {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 20px;
+  background: #2e7d32;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-log:hover {
+  background: #256b28;
+}
+
+.log-error {
+  font-size: 0.8rem;
+  color: #c75c5c;
+  margin: 0.5rem 0 0;
+}
+
+/* Activities Section */
+.activities-section {
+  padding: 1.2rem 2rem;
+}
+
+.activities-section .section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.8rem;
+}
+
+.activities-section h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.create-activity-form {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.create-activity-form input,
+.create-activity-form select {
+  padding: 0.5rem 0.7rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  background: #f7f7f7;
+}
+
+.create-activity-form input:focus,
+.create-activity-form select:focus {
+  outline: 2px solid #d4979a;
+  border-color: transparent;
+}
+
+.activity-chips {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.activity-chip {
+  padding: 0.35rem 0.9rem;
+  background: #f5d0d3;
+  border-radius: 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.empty-hint {
+  font-size: 0.85rem;
+  color: #999;
+  margin: 0;
+}
+
+/* Tabs */
+.tab-bar {
+  display: flex;
+  gap: 0;
+  padding: 0 2rem;
+  border-bottom: 1px solid #eee;
+  background: #fff;
+}
+
+.tab-btn {
+  padding: 0.7rem 1.2rem;
+  border: none;
+  background: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #888;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.tab-btn.active {
+  color: #1a1a1a;
+  border-bottom-color: #d4979a;
+}
+
+.tab-btn:hover {
+  color: #333;
+}
+
+/* Tab Content */
+.tab-content {
+  padding: 1rem 2rem;
+}
+
+/* Member Row (used in Today and Members tabs) */
+.member-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.8rem 1rem;
+  background: #fff;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  border: 1px solid #eee;
+}
+
+.member-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.member-meta {
+  font-size: 0.8rem;
+  color: #888;
+}
+
+.role-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #d4979a;
+  background: #fdf0f0;
+  padding: 0.15rem 0.5rem;
+  border-radius: 8px;
+  text-transform: uppercase;
+}
+
+.member-logs {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.status-logged {
+  font-size: 0.8rem;
+  color: #2e7d32;
+  background: #e8f5e9;
+  padding: 0.2rem 0.7rem;
+  border-radius: 12px;
+}
+
+.status-not-logged {
+  font-size: 0.8rem;
+  color: #c75c5c;
+  background: #fdf0f0;
+  padding: 0.2rem 0.7rem;
+  border-radius: 12px;
+}
+
+/* Leaderboard */
+.leaderboard-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+  background: #fff;
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  border: 1px solid #eee;
+}
+
+.leaderboard-rank {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #d4979a;
+  min-width: 32px;
+}
+
+.leaderboard-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.leaderboard-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.leaderboard-activity {
+  font-size: 0.75rem;
+  color: #888;
+}
+
+.leaderboard-streak {
+  text-align: right;
+}
+
+.streak-current {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+.streak-record {
+  font-size: 0.7rem;
+  color: #888;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .group-detail-header {
+    padding: 0.8rem 1.2rem;
+  }
+
+  .group-info-bar {
+    padding: 0.8rem 1.2rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+
+  .log-section {
+    margin: 0.8rem 1rem;
+    padding: 1rem;
+  }
+
+  .log-form {
+    flex-direction: column;
+  }
+
+  .log-form select,
+  .log-form input,
+  .log-form button {
+    width: 100%;
+  }
+
+  .activities-section,
+  .tab-content {
+    padding: 1rem 1.2rem;
+  }
+
+  .tab-bar {
+    padding: 0 1.2rem;
+  }
+}
