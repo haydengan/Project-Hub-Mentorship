@@ -296,24 +296,34 @@ export default function GroupDetailPage() {
             )}
 
             {tab === 'board' && (
-              <div className="gp-list">
-                {leaderboard.length === 0
-                  ? <p className="gp-empty-text">No activity logged yet.</p>
-                  : leaderboard.map((e, i) => (
-                    <div key={`${e.userId}-${e.activityId}`} className={`gp-row ${i < 3 ? 'gp-row-top' : ''}`}>
-                      <div className="gp-rank">{i < 3 ? MEDAL[i] : <span className="gp-rank-n">#{i+1}</span>}</div>
-                      <div className="gp-row-info">
-                        <span className="gp-row-name">{e.username}</span>
-                        <span className="gp-row-sub">{e.activityName}</span>
+              leaderboard.length === 0
+                ? <p className="gp-empty-text">No activity logged yet.</p>
+                : <div className="board-sections">
+                    {Object.entries(
+                      leaderboard.reduce<Record<string, typeof leaderboard>>((acc, e) => {
+                        (acc[e.activityName] ||= []).push(e);
+                        return acc;
+                      }, {})
+                    ).map(([actName, entries]) => (
+                      <div key={actName} className="board-group">
+                        <h3 className="board-activity">{actName}</h3>
+                        <div className="gp-list">
+                          {entries.map((e, i) => (
+                            <div key={`${e.userId}-${e.activityId}`} className={`gp-row ${i < 3 ? 'gp-row-top' : ''}`}>
+                              <div className="gp-rank">{i < 3 ? MEDAL[i] : <span className="gp-rank-n">#{i+1}</span>}</div>
+                              <div className="gp-row-info">
+                                <span className="gp-row-name">{e.username}</span>
+                              </div>
+                              <div className="gp-row-stat">
+                                <span className="gp-stat-v">{fmt(e.totalMinutes)}</span>
+                                {e.currentStreak > 0 && <span className="gp-stat-s">{e.currentStreak}d</span>}
+                              </div>
+                            </div>
+                          ))}
+                        </div>
                       </div>
-                      <div className="gp-row-stat">
-                        <span className="gp-stat-v">{fmt(e.totalMinutes)}</span>
-                        {e.currentStreak > 0 && <span className="gp-stat-s">{e.currentStreak}d</span>}
-                      </div>
-                    </div>
-                  ))
-                }
-              </div>
+                    ))}
+                  </div>
             )}
           </div>
         </div>

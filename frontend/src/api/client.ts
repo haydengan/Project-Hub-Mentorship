@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const client = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || '',
   withCredentials: true,
 });
 
@@ -17,7 +18,6 @@ client.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // Only attempt refresh on 401, and not for auth endpoints themselves
     if (
       error.response?.status !== 401 ||
       originalRequest._retry ||
@@ -30,7 +30,6 @@ client.interceptors.response.use(
     }
 
     if (isRefreshing) {
-      // Queue this request until refresh completes
       return new Promise((resolve) => {
         pendingRequests.push(() => {
           originalRequest._retry = true;
@@ -43,13 +42,14 @@ client.interceptors.response.use(
     originalRequest._retry = true;
 
     try {
-      await axios.post('/web/api/auth/refresh', null, {
-        withCredentials: true,
-      });
+      await axios.post(
+        (import.meta.env.VITE_API_URL || '') + '/web/api/auth/refresh',
+        null,
+        { withCredentials: true }
+      );
       onRefreshComplete();
       return client(originalRequest);
     } catch {
-      // Refresh failed — clear queue and redirect to login
       pendingRequests = [];
       window.location.href = '/login';
       return Promise.reject(error);

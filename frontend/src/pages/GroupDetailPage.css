@@ -196,16 +196,7 @@
 
 /* Top 3 leaderboard */
 .gp-row-top {
-  background: linear-gradient(145deg, rgb(var(--brand)), var(--gray-800)); border: none;
-  box-shadow: var(--shadow-md);
-}
-.gp-row-top .gp-row-name { color: #fff; }
-.gp-row-top .gp-row-sub { color: rgba(255,255,255,0.55); }
-.gp-row-top .gp-stat-v { color: #fff; }
-.gp-row-top .gp-stat-s { color: rgba(255,255,255,0.55); }
-.gp-row-top .gp-rank { color: #fff; }
-.gp-row-top .gp-av {
-  background: rgba(255,255,255,0.15); color: #fff;
+  background: var(--surface); border: 1.5px solid rgba(var(--brand), 0.2);
 }
 
 .gp-av {
@@ -265,6 +256,15 @@
 .gp-stat-s { display: block; font-size: 0.62rem; color: var(--text-muted); margin-top: 0.1rem; }
 
 .gp-week-wrap { padding: 0.25rem 0; }
+
+/* Board sections */
+.board-sections { display: flex; flex-direction: column; gap: 1rem; }
+.board-group { }
+.board-activity {
+  font-size: 0.82rem; font-weight: 700; color: var(--text-secondary);
+  margin: 0 0 0.4rem; padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--border);
+}
 
 /* ═══ CHAT ═══ */
 .gp-chat { }

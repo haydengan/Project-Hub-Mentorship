@@ -30,6 +30,7 @@ export default function DashboardPage() {
   const [userId, setUserId] = useState('');
   const [calMonth, setCalMonth] = useState(new Date());
   const [calData, setCalData] = useState<Record<string, number>>({});
+  const [calLogs, setCalLogs] = useState<Record<string, { name: string; mins: number }[]>>({});
   const [selectedDay, setSelectedDay] = useState<string | null>(null);
 
   useEffect(() => { load(); }, []);
@@ -64,16 +65,23 @@ export default function DashboardPage() {
     const lastDay = new Date(year, month + 1, 0).getDate();
     const endDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(lastDay).padStart(2, '0')}`;
     const days: Record<string, number> = {};
+    const logs: Record<string, { name: string; mins: number }[]> = {};
     for (const g of groups) {
       try {
+        const acts = allActivities.filter(a => a.groupId === g.id);
         const weeks: DailyGroupSummary[] = await getGroupLogsWeek(g.id, startDate, endDate);
         for (const d of weeks) for (const m of d.members) if (m.userId === userId) {
-          const mins = m.logs.reduce((s, l) => s + l.durationMins, 0);
-          days[d.date] = (days[d.date] || 0) + mins;
+          for (const l of m.logs) {
+            days[d.date] = (days[d.date] || 0) + l.durationMins;
+            if (!logs[d.date]) logs[d.date] = [];
+            const actName = acts.find(a => a.id === l.activityId)?.name || 'Activity';
+            logs[d.date].push({ name: actName, mins: l.durationMins });
+          }
         }
       } catch { /* skip */ }
     }
     setCalData(days);
+    setCalLogs(logs);
   }
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -215,10 +223,18 @@ export default function DashboardPage() {
               onPrevMonth={() => setCalMonth(new Date(calMonth.getFullYear(), calMonth.getMonth() - 1))}
               onNextMonth={() => setCalMonth(new Date(calMonth.getFullYear(), calMonth.getMonth() + 1))}
               onDayClick={(d) => setSelectedDay(selectedDay === d ? null : d)} />
-            {selectedDay && calData[selectedDay] && (
+            {selectedDay && calData[selectedDay] > 0 && (
               <div className="d-cal-detail">
-                <span className="d-cal-date">{new Date(selectedDay + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</span>
-                <span className="d-cal-mins">{fmt(calData[selectedDay])}</span>
+                <div className="d-cal-date">{new Date(selectedDay + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}</div>
+                <div className="d-cal-logs">
+                  {(calLogs[selectedDay] || []).map((l, i) => (
+                    <div key={i} className="d-cal-log">
+                      <span className="d-cal-log-name">{l.name}</span>
+                      <span className="d-cal-log-mins">{l.mins}m</span>
+                    </div>
+                  ))}
+                </div>
+                <div className="d-cal-total">Total: {fmt(calData[selectedDay])}</div>
               </div>
             )}
           </section>
