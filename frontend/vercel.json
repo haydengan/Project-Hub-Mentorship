@@ -1,5 +1,7 @@
 {
   "rewrites": [
+    { "source": "/api/(.*)", "destination": "https://project-hub-mentorship-production.up.railway.app/api/$1" },
+    { "source": "/web/api/(.*)", "destination": "https://project-hub-mentorship-production.up.railway.app/web/api/$1" },
     { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
