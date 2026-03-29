@@ -20,7 +20,7 @@ export default function WeeklyChart({ data }: WeeklyChartProps) {
   return (
     <div className="wc">
       <div className="wc-bars">
-        {data.map((d, i) => {
+        {data.map((d) => {
           const pct = max > 0 ? (d.totalMins / max) * 100 : 0;
           const dayName = DAYS[new Date(d.date + 'T00:00:00').getDay() === 0 ? 6 : new Date(d.date + 'T00:00:00').getDay() - 1];
           const isToday = d.date === new Date().toISOString().split('T')[0];
