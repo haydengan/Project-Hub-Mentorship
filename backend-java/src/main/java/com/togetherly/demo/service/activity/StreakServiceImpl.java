@@ -21,16 +21,15 @@ import org.springframework.stereotype.Service;
 /**
  * Streak service implementation.
  *
- * STREAK ALGORITHM:
- * When a user logs an activity, we check their last logged date:
+ * Tracks both streaks (consecutive days) and total accumulated minutes.
  *
- *   lastLoggedDate == today     → already counted, no change
+ * STREAK ALGORITHM:
+ *   lastLoggedDate == today     → no streak change (already counted today)
  *   lastLoggedDate == yesterday → consecutive day, increment streak
  *   lastLoggedDate == null      → first time ever, start at 1
  *   anything else               → streak broken, reset to 1
  *
- * Longest streak is updated whenever current streak surpasses it.
- * This runs inside the same transaction as the log insert.
+ * Total minutes are always accumulated on every log, regardless of streak.
  */
 @Service
 public class StreakServiceImpl implements StreakService {
@@ -42,7 +41,7 @@ public class StreakServiceImpl implements StreakService {
     @Autowired private UserRepository userRepository;
 
     @Override
-    public void updateStreak(UUID userId, UUID activityId, LocalDate loggedDate) {
+    public void updateStreak(UUID userId, UUID activityId, LocalDate loggedDate, int durationMins) {
         Streak streak = streakRepository.findByUserIdAndActivityId(userId, activityId)
                 .orElse(null);
 
@@ -53,15 +52,20 @@ public class StreakServiceImpl implements StreakService {
             streak.setActivityId(activityId);
             streak.setCurrentStreak(1);
             streak.setLongestStreak(1);
+            streak.setTotalMinutes(durationMins);
             streak.setLastLoggedDate(loggedDate);
             streakRepository.save(streak);
             return;
         }
 
+        // Always accumulate minutes
+        streak.setTotalMinutes(streak.getTotalMinutes() + durationMins);
+
         LocalDate lastDate = streak.getLastLoggedDate();
 
         if (lastDate != null && lastDate.equals(loggedDate)) {
-            // Already logged today — no streak change
+            // Already logged today — no streak change, just minutes
+            streakRepository.save(streak);
             return;
         }
 
@@ -94,19 +98,21 @@ public class StreakServiceImpl implements StreakService {
 
                     // Check if streak is still active (last log was today or yesterday)
                     LocalDate today = LocalDate.now();
+                    int currentStreak = streak.getCurrentStreak();
                     if (streak.getLastLoggedDate() != null
                             && streak.getLastLoggedDate().isBefore(today.minusDays(1))) {
-                        // Streak has expired — show 0 current but keep longest
-                        return new StreakResponse(
-                                streak.getUserId().toString(),
-                                streak.getActivityId().toString(),
-                                activityName,
-                                0,
-                                streak.getLongestStreak(),
-                                streak.getLastLoggedDate().toString());
+                        currentStreak = 0;
                     }
 
-                    return StreakResponse.from(streak, activityName);
+                    return new StreakResponse(
+                            streak.getUserId().toString(),
+                            streak.getActivityId().toString(),
+                            activityName,
+                            currentStreak,
+                            streak.getLongestStreak(),
+                            streak.getTotalMinutes(),
+                            streak.getLastLoggedDate() != null
+                                    ? streak.getLastLoggedDate().toString() : null);
                 })
                 .toList();
     }
@@ -121,7 +127,7 @@ public class StreakServiceImpl implements StreakService {
             throw new InvalidOperation("you are not a member of this group !");
         }
 
-        List<Streak> streaks = streakRepository.findByGroupIdOrderByCurrentStreakDesc(groupId);
+        List<Streak> streaks = streakRepository.findByGroupIdOrderByTotalMinutesDesc(groupId);
         LocalDate today = LocalDate.now();
 
         return streaks.stream()
@@ -146,7 +152,8 @@ public class StreakServiceImpl implements StreakService {
                             streak.getActivityId().toString(),
                             activityName,
                             currentStreak,
-                            streak.getLongestStreak());
+                            streak.getLongestStreak(),
+                            streak.getTotalMinutes());
                 })
                 .toList();
     }

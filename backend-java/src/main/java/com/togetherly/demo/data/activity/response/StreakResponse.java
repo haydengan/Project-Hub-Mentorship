@@ -11,6 +11,7 @@ public record StreakResponse(
         String activityName,
         int currentStreak,
         int longestStreak,
+        long totalMinutes,
         String lastLoggedDate) {
 
     public static StreakResponse from(Streak streak, String activityName) {
@@ -20,6 +21,7 @@ public record StreakResponse(
                 activityName,
                 streak.getCurrentStreak(),
                 streak.getLongestStreak(),
+                streak.getTotalMinutes(),
                 streak.getLastLoggedDate() != null
                         ? streak.getLastLoggedDate().toString() : null);
     }

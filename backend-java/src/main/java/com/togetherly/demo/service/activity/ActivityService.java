@@ -25,7 +25,8 @@ public interface ActivityService {
             throws NotFound, InvalidOperation;
 
     /** Log an activity entry for today. One log per activity per day. */
-    ActivityLogResponse logActivity(UUID userId, UUID activityId, int durationMins, String note)
+    ActivityLogResponse logActivity(UUID userId, UUID activityId, int durationMins, String note,
+                                     String mediaUrl)
             throws NotFound, InvalidOperation, AlreadyExist;
 
     /** Get today's logs for all members in a group. */

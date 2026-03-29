@@ -40,54 +40,67 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="login-wrapper">
-      <h1 className="brand-title">Togetherly</h1>
+    <div className="login-page">
+      <div className="login-hero">
+        <div className="hero-content">
+          <h1 className="hero-brand">Togetherly</h1>
+          <p className="hero-tagline">Build habits together.<br />Stay accountable, stay consistent.</p>
+        </div>
+        <div className="hero-shapes">
+          <div className="shape shape-1" />
+          <div className="shape shape-2" />
+          <div className="shape shape-3" />
+          <div className="shape shape-4" />
+        </div>
+      </div>
 
-      <div className="login-card-container">
-        <div className="card-bg card-bg-1" />
-        <div className="card-bg card-bg-2" />
+      <div className="login-form-side">
+        <form className="login-form" onSubmit={handleSubmit}>
+          <h2>Welcome back</h2>
+          <p className="login-subtitle">Sign in to your account</p>
 
-        <form className="login-card" onSubmit={handleSubmit}>
-          <h2>Welcome back!</h2>
+          {error && <div className="form-error">{error}</div>}
 
-          {error && <p className="error-message">{error}</p>}
+          <div className="form-group">
+            <label htmlFor="username">Email or username</label>
+            <input
+              id="username"
+              type="text"
+              placeholder="Enter your email or username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+              autoComplete="username"
+            />
+          </div>
 
-          <label htmlFor="username">E-mail or username</label>
-          <input
-            id="username"
-            type="text"
-            placeholder="Type your e-mail or username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            required
-          />
+          <div className="form-group">
+            <div className="label-row">
+              <label htmlFor="password">Password</label>
+              <Link to="/forgot-password" className="forgot-link">Forgot?</Link>
+            </div>
+            <input
+              id="password"
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              autoComplete="current-password"
+            />
+          </div>
 
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            placeholder="Type your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-          <Link to="/forgot-password" className="forgot-link">Forgot Password?</Link>
-
-          <button type="submit" disabled={loading}>
-            {loading ? 'Signing in...' : 'Sign In'}
+          <button type="submit" className="btn-submit" disabled={loading}>
+            {loading ? (
+              <span className="btn-loading">
+                <span className="spinner" />
+                Signing in...
+              </span>
+            ) : 'Sign In'}
           </button>
 
-          <div className="divider">
-            <span>or do it via other accounts</span>
-          </div>
-
-          <div className="social-icons">
-            <div className="social-icon">Gmail</div>
-            <div className="social-icon">Apple</div>
-          </div>
-
-          <p className="signup-prompt">
-            Don't have an account? <Link to="/signup">Sign Up</Link>
+          <p className="form-footer">
+            Don't have an account? <Link to="/signup">Create one</Link>
           </p>
         </form>
       </div>

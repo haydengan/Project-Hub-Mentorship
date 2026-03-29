@@ -17,4 +17,7 @@ public record LogActivityRequest(
         int durationMins,
 
         @Size(max = 256, message = "note must be at most 256 characters !")
-        String note) {}
+        String note,
+
+        @Size(max = 512, message = "media url must be at most 512 characters !")
+        String mediaUrl) {}

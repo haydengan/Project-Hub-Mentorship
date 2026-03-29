@@ -63,6 +63,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.NEVER))
+                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin(AbstractHttpConfigurer::disable)
                 .build();
@@ -81,7 +82,10 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration apiConfiguration = new CorsConfiguration();
-        apiConfiguration.setAllowedOriginPatterns(List.of(corsConfig.getAllowOrigin()));
+        apiConfiguration.setAllowedOriginPatterns(List.of(
+                corsConfig.getAllowOrigin(),
+                "chrome-extension://*"
+        ));
         apiConfiguration.setAllowCredentials(true);
         apiConfiguration.addAllowedHeader(CorsConfiguration.ALL);
         apiConfiguration.addAllowedMethod(CorsConfiguration.ALL);

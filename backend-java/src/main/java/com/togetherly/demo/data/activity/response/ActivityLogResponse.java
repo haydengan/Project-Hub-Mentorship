@@ -11,6 +11,7 @@ public record ActivityLogResponse(
         String activityId,
         int durationMins,
         String note,
+        String mediaUrl,
         String loggedDate,
         String createdAt) {
 
@@ -21,7 +22,8 @@ public record ActivityLogResponse(
                 log.getActivityId().toString(),
                 log.getDurationMins(),
                 log.getNote(),
+                log.getMediaUrl(),
                 log.getLoggedDate().toString(),
-                log.getCreateAt().toString());
+                log.getCreateAt() != null ? log.getCreateAt().toString() : null);
     }
 }

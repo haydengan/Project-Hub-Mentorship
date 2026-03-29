@@ -4,8 +4,8 @@ import com.togetherly.demo.exception.ValidationError;
 import java.util.regex.Pattern;
 
 public class UserNameValidator implements Validator<String, String> {
-    public static final String REGEX = "[a-zA-Z0-9]+";
-    public static final String NOT_MATCH_MSG = "username can only contain a-z, A-Z, and 0-9 !";
+    public static final String REGEX = "[a-zA-Z0-9 ]+";
+    public static final String NOT_MATCH_MSG = "username can only contain a-z, A-Z, 0-9, and spaces !";
     private static final Pattern pattern = Pattern.compile(REGEX);
     private static final UserNameValidator instance = new UserNameValidator();
 

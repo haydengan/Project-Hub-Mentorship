@@ -21,6 +21,6 @@ public record ActivityResponse(
                 activity.getType(),
                 activity.getGroupId().toString(),
                 activity.getCreatedBy().toString(),
-                activity.getCreateAt().toString());
+                activity.getCreateAt() != null ? activity.getCreateAt().toString() : null);
     }
 }

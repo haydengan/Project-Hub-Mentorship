@@ -8,6 +8,9 @@ export default function SignUpPage() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [agreed, setAgreed] = useState(false);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -18,6 +21,10 @@ export default function SignUpPage() {
 
     if (password.length < 8) {
       setError('Password must be at least 8 characters.');
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError('Passwords do not match.');
       return;
     }
     if (!agreed) {
@@ -77,38 +84,65 @@ export default function SignUpPage() {
           required
         />
 
-        <label htmlFor="email">E-mail or phone number</label>
+        <label htmlFor="email">Email</label>
         <input
           id="email"
           type="email"
-          placeholder="Type your e-mail or phone number"
+          placeholder="Enter your email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           required
         />
 
         <label htmlFor="password">Password</label>
-        <input
-          id="password"
-          type="password"
-          placeholder="Type your password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+        <div className="input-with-toggle">
+          <input
+            id="password"
+            type={showPassword ? 'text' : 'password'}
+            placeholder="Create a password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <button
+            type="button"
+            className="toggle-visibility"
+            onClick={() => setShowPassword(!showPassword)}
+          >
+            {showPassword ? 'Hide' : 'Show'}
+          </button>
+        </div>
         <p className="hint">Must be 8 characters at least</p>
 
-        <label className="checkbox-label" style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem', fontSize: '0.8rem', color: '#666', marginBottom: '1.2rem', cursor: 'pointer' }}>
+        <label htmlFor="confirmPassword">Confirm Password</label>
+        <div className="input-with-toggle">
+          <input
+            id="confirmPassword"
+            type={showConfirmPassword ? 'text' : 'password'}
+            placeholder="Re-type your password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
+          <button
+            type="button"
+            className="toggle-visibility"
+            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+          >
+            {showConfirmPassword ? 'Hide' : 'Show'}
+          </button>
+        </div>
+
+        <label className="checkbox-wrap">
           <input
             type="checkbox"
             checked={agreed}
             onChange={(e) => setAgreed(e.target.checked)}
-            style={{ marginTop: '0.2rem' }}
           />
           <span>
-            By creating an account means you agree to the{' '}
-            <a href="#" style={{ color: '#1a1a1a', fontWeight: 700 }}>Terms and Conditions</a>, and our{' '}
-            <a href="#" style={{ color: '#1a1a1a', fontWeight: 700 }}>Privacy Policy</a>
+            By creating an account you agree to the{' '}
+            <a href="#">Terms and Conditions</a> and{' '}
+            <a href="#">Privacy Policy</a>
           </span>
         </label>
 
@@ -116,17 +150,7 @@ export default function SignUpPage() {
           {loading ? 'Creating account...' : 'Sign Up'}
         </button>
 
-        <div className="divider">
-          <span>or do it via other accounts</span>
-        </div>
-
-        <div className="social-icons">
-          <div className="social-icon">G</div>
-          <div className="social-icon">&apple;</div>
-          <div className="social-icon">f</div>
-        </div>
-
-        <p className="auth-link">
+        <p className="auth-link" style={{ marginTop: '1.5rem' }}>
           Already have an account? <Link to="/login">Sign In</Link>
         </p>
       </form>

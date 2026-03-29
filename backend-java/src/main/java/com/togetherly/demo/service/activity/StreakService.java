@@ -14,16 +14,18 @@ import java.util.UUID;
 public interface StreakService {
 
     /**
-     * Update a user's streak after they log an activity.
+     * Update a user's streak and total minutes after they log an activity.
      * Called transactionally from ActivityServiceImpl.
      *
-     * Logic:
+     * Streak logic:
      * - If lastLoggedDate == yesterday → increment current streak
-     * - If lastLoggedDate == today → no change (already logged)
+     * - If lastLoggedDate == today → no streak change (already counted today)
      * - Otherwise → streak resets to 1
      * - Update longest streak if current exceeds it
+     *
+     * Total minutes are always accumulated regardless of streak.
      */
-    void updateStreak(UUID userId, UUID activityId, LocalDate loggedDate);
+    void updateStreak(UUID userId, UUID activityId, LocalDate loggedDate, int durationMins);
 
     /** Get all streaks for the current user across all their activities. */
     List<StreakResponse> getMyStreaks(UUID userId);

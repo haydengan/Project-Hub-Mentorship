@@ -1,0 +1,93 @@
+.pr { min-height: 100vh; background: var(--bg); padding-bottom: calc(2rem + var(--safe-bottom)); }
+
+.pr-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: calc(0.85rem + var(--safe-top)) 1.5rem 0.85rem;
+  background: var(--gray-800); border-bottom: none;
+  position: sticky; top: 0; z-index: 10;
+}
+.pr-title { font-size: 1rem; font-weight: 700; color: #fff; margin: 0; flex: 1; text-align: center; }
+
+.pr-main { max-width: 480px; margin: 0 auto; padding: 1.5rem 1.25rem; }
+
+/* Hero */
+.pr-hero { text-align: center; padding-bottom: 1.5rem; }
+.pr-big-av {
+  width: 72px; height: 72px; border-radius: var(--r-full);
+  background: linear-gradient(145deg, rgb(var(--brand)), var(--gray-900));
+  color: #fff; display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem; font-weight: 800; margin: 0 auto 0.85rem;
+}
+.pr-name-row { display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
+.pr-name { font-size: 1.25rem; font-weight: 800; margin: 0; }
+.pr-edit-btn {
+  padding: 0.25rem 0.6rem; border: 1.5px solid var(--border); border-radius: var(--r-sm);
+  background: var(--surface); color: rgb(var(--brand)); font-size: 0.72rem; font-weight: 600;
+  transition: all 0.15s;
+}
+.pr-edit-btn:hover { border-color: rgb(var(--brand)); }
+
+.pr-edit-form { display: flex; align-items: center; justify-content: center; gap: 0.35rem; }
+.pr-edit-form input {
+  padding: 0.5rem 0.7rem; border: 1.5px solid var(--border); border-radius: var(--r-sm);
+  font-size: 0.88rem; width: 160px; text-align: center;
+}
+.pr-edit-form input:focus { outline: none; border-color: rgb(var(--brand)); }
+.pr-email { font-size: 0.82rem; color: var(--text-muted); margin: 0.35rem 0 0; }
+
+/* Stats */
+.pr-stats {
+  display: flex; gap: 0.5rem; margin-bottom: 1.5rem;
+}
+.pr-stat {
+  flex: 1; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: 0.85rem 0.5rem; text-align: center;
+}
+.pr-stat-val { display: block; font-size: 1.2rem; font-weight: 800; color: var(--text); letter-spacing: -0.3px; }
+.pr-stat-label { display: block; font-size: 0.65rem; color: var(--text-muted); font-weight: 500; margin-top: 0.15rem; text-transform: uppercase; letter-spacing: 0.3px; }
+
+/* Sections */
+.pr-sec { margin-bottom: 1.25rem; }
+.pr-sec-h { font-size: 0.82rem; font-weight: 700; color: var(--text); margin: 0 0 0.6rem; }
+
+/* Breakdown */
+.pr-breakdown { display: flex; flex-direction: column; gap: 0.5rem; }
+.pr-act-row { display: flex; align-items: center; gap: 0.6rem; }
+.pr-act-name { font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); width: 80px; flex-shrink: 0; }
+.pr-act-bar-wrap {
+  flex: 1; height: 8px; background: var(--gray-100); border-radius: var(--r-full); overflow: hidden;
+}
+.pr-act-bar {
+  height: 100%; background: rgb(var(--brand)); border-radius: var(--r-full);
+  min-width: 4px; transition: width 0.5s ease;
+}
+.pr-act-val { font-size: 0.72rem; font-weight: 700; color: var(--text); width: 50px; text-align: right; }
+
+/* Info rows */
+.pr-info-rows {
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-md); overflow: hidden;
+}
+.pr-info-row {
+  display: flex; justify-content: space-between; padding: 0.7rem 0.85rem;
+  border-bottom: 1px solid var(--border);
+}
+.pr-info-row:last-child { border-bottom: none; }
+.pr-info-label { font-size: 0.82rem; color: var(--text-secondary); }
+.pr-info-val { font-size: 0.82rem; font-weight: 600; color: var(--text); }
+
+/* Back button */
+.pr-back {
+  width: 34px; height: 34px; border-radius: var(--r-sm); border: 1.5px solid var(--gray-700);
+  background: transparent; display: flex; align-items: center; justify-content: center;
+  color: var(--gray-400); text-decoration: none; transition: all 0.15s; flex-shrink: 0;
+}
+.pr-back:hover { border-color: rgba(var(--brand-light),0.5); color: rgb(var(--brand-light)); }
+
+/* Day detail */
+.pr-day-detail {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0.6rem 0.85rem; margin-top: 0.5rem;
+  background: var(--gray-100); border-radius: var(--r-sm);
+}
+.pr-day-date { font-size: 0.78rem; font-weight: 600; color: var(--text-secondary); }
+.pr-day-mins { font-size: 0.88rem; font-weight: 800; color: rgb(var(--brand-dark)); }

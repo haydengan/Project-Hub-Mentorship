@@ -145,7 +145,8 @@ public class ActivityController {
         try {
             UUID userId = UUID.fromString(AuthUtil.currentUserDetail().getId());
             ActivityLogResponse log = activityService.logActivity(
-                    userId, request.activityId(), request.durationMins(), request.note());
+                    userId, request.activityId(), request.durationMins(), request.note(),
+                    request.mediaUrl());
             return ResponseEntity.ok(log);
         } catch (NotFound e) {
             return new ResponseEntity<>(

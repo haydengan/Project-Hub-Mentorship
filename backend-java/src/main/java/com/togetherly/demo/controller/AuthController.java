@@ -25,6 +25,7 @@ import com.togetherly.demo.exception.AlreadyExist;
 import com.togetherly.demo.exception.InvalidOperation;
 import com.togetherly.demo.exception.InvalidTokenException;
 import com.togetherly.demo.exception.UserDoesNotExist;
+import com.togetherly.demo.exception.ValidationError;
 import com.togetherly.demo.model.auth.User;
 import com.togetherly.demo.model.auth.VerifyToken;
 import com.togetherly.demo.service.email.EmailService;
@@ -293,6 +294,9 @@ public class AuthController {
         } catch (AlreadyExist | InvalidOperation e) {
             return new ResponseEntity<>(
                     new ErrorMessageResponse(e.getMessage()), HttpStatus.FORBIDDEN);
+        } catch (ValidationError e) {
+            return new ResponseEntity<>(
+                    new ErrorMessageResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
         }
     }
 

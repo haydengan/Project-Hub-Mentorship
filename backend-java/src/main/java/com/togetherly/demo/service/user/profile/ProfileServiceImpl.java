@@ -2,6 +2,7 @@ package com.togetherly.demo.service.user.profile;
 
 import com.togetherly.demo.data.PageList;
 import com.togetherly.demo.data.user.UserProfile;
+import com.togetherly.demo.exception.AlreadyExist;
 import com.togetherly.demo.exception.UserDoesNotExist;
 import com.togetherly.demo.model.auth.User;
 import com.togetherly.demo.repository.user.UserRepository;
@@ -61,5 +62,17 @@ public class ProfileServiceImpl implements ProfileService {
                 paging.getTotalPages(),
                 paging.getSize(),
                 profiles);
+    }
+
+    @Override
+    public void updateUsername(String userId, String newUsername)
+            throws UserDoesNotExist, AlreadyExist {
+        User user = userRepository.findById(UUID.fromString(userId))
+                .orElseThrow(() -> new UserDoesNotExist("user not found"));
+        if (userRepository.getByUserName(newUsername).isPresent()) {
+            throw new AlreadyExist("username already taken !");
+        }
+        user.setUserName(newUsername);
+        userRepository.save(user);
     }
 }

@@ -12,7 +12,8 @@ public record GroupLeaderboardEntry(
         String activityId,
         String activityName,
         int currentStreak,
-        int longestStreak) {
+        int longestStreak,
+        long totalMinutes) {
 
     public static GroupLeaderboardEntry from(
             Streak streak, String username, String activityName) {
@@ -22,6 +23,7 @@ public record GroupLeaderboardEntry(
                 streak.getActivityId().toString(),
                 activityName,
                 streak.getCurrentStreak(),
-                streak.getLongestStreak());
+                streak.getLongestStreak(),
+                streak.getTotalMinutes());
     }
 }

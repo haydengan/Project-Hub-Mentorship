@@ -2,6 +2,8 @@ package com.togetherly.demo.filter;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -72,8 +74,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (accessToken != null) {
             try {
                 // Check Redis blacklist first (fast rejection)
-                if (jwtService.isAccessTokenInBlackList(accessToken)) {
-                    throw new InvalidTokenException("invalid token !");
+                boolean blacklisted = jwtService.isAccessTokenInBlackList(accessToken);
+                System.err.println("[JWT FILTER] Blacklist check: " + blacklisted);
+                if (blacklisted) {
+                    throw new InvalidTokenException("token is blacklisted !");
                 }
 
                 // Parse JWT → extract UserDetail (id, username, role, etc.)
@@ -85,9 +89,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         userDetail, null, userDetail.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (Exception e) {
-                // Any error → 401 Unauthorized, stop processing
-                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                return;
+                System.err.println("[JWT FILTER] Token validation failed: " + e.getClass().getSimpleName() + " - " + e.getMessage());
+                if (e.getCause() != null) {
+                    System.err.println("[JWT FILTER] Caused by: " + e.getCause().getClass().getSimpleName() + " - " + e.getCause().getMessage());
+                }
+                e.printStackTrace(System.err);
+                SecurityContextHolder.clearContext();
             }
         }
 

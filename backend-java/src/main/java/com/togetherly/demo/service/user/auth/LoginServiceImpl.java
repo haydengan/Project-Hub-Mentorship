@@ -54,7 +54,8 @@ public class LoginServiceImpl implements LoginService {
     public UserDetail login(String username, String password) throws AuthenticationException {
         User user = userRepository
                 .getByUserName(username)
-                .orElseThrow(() -> new UsernameNotFoundException("Username is not exist !"));
+                .or(() -> userRepository.getByEmail(username))
+                .orElseThrow(() -> new UsernameNotFoundException("Username or email does not exist !"));
 
         LoginAttempt loginAttempt = user.getLoginAttempt();
 
@@ -64,9 +65,9 @@ public class LoginServiceImpl implements LoginService {
                     "You have try too many times, please try again later");
         }
 
-        // Step 2: Authenticate with Spring Security
+        // Step 2: Authenticate with Spring Security (use actual userName, not email)
         try {
-            UserDetail userDetail = AuthUtil.authenticate(authenticationManager, username, password);
+            UserDetail userDetail = AuthUtil.authenticate(authenticationManager, user.getUserName(), password);
             // Step 3a: Success — record it (resets counter)
             try {
                 loginAttempt.attempt(loginConfig, true);

@@ -4,8 +4,8 @@ import com.togetherly.demo.exception.ValidationError;
 import java.util.regex.Pattern;
 
 public class PasswordValidator implements Validator<String, String> {
-    public static final String REGEX = "[a-zA-Z0-9]+";
-    public static final String NOT_MATCH_MSG = "password can only contain a-z, A-Z, and 0-9 !";
+    public static final String REGEX = "[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\",./<>?]+";
+    public static final String NOT_MATCH_MSG = "password can only contain letters, numbers, and special characters !";
     private static final Pattern pattern = Pattern.compile(REGEX);
     private static final PasswordValidator instance = new PasswordValidator();
 

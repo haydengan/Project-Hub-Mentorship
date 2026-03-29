@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Togetherly - Quick Log",
+  "version": "1.0.0",
+  "description": "Quickly log your activities from any tab",
+  "permissions": ["storage"],
+  "host_permissions": ["http://localhost:*/*"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon48.svg"
+  },
+  "icons": {
+    "16": "icon16.svg",
+    "48": "icon48.svg",
+    "128": "icon128.svg"
+  }
+}

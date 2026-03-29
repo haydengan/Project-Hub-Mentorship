@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Togetherly</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <!-- Login view -->
+  <div id="login-view" class="view" style="display:none">
+    <div class="header">
+      <h1 class="logo">Togetherly</h1>
+    </div>
+    <div class="body">
+      <p class="subtitle">Sign in to log activities</p>
+      <input type="text" id="username" placeholder="Email or username" />
+      <input type="password" id="password" placeholder="Password" />
+      <button id="login-btn" class="btn-primary">Sign In</button>
+      <p id="login-error" class="error"></p>
+    </div>
+  </div>
+
+  <!-- Log view -->
+  <div id="log-view" class="view" style="display:none">
+    <div class="header">
+      <h1 class="logo">Togetherly</h1>
+      <button id="logout-btn" class="btn-ghost-sm">Log out</button>
+    </div>
+    <div class="body">
+      <select id="activity-select">
+        <option value="">What did you do?</option>
+      </select>
+
+      <div class="duration-picker">
+        <div class="dp-col">
+          <button class="dp-btn" id="hr-up">&#9650;</button>
+          <span class="dp-val" id="hr-val">0</span>
+          <button class="dp-btn" id="hr-down">&#9660;</button>
+          <span class="dp-label">hr</span>
+        </div>
+        <span class="dp-sep">:</span>
+        <div class="dp-col">
+          <button class="dp-btn" id="min-up">&#9650;</button>
+          <span class="dp-val" id="min-val">00</span>
+          <button class="dp-btn" id="min-down">&#9660;</button>
+          <span class="dp-label">min</span>
+        </div>
+      </div>
+
+      <input type="text" id="note-input" placeholder="Note (optional)" />
+      <button id="log-btn" class="btn-primary">Log Activity</button>
+      <p id="log-message" class="message"></p>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

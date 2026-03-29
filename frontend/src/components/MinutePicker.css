@@ -1,0 +1,37 @@
+.mp-scroll {
+  display: flex;
+  gap: 0.35rem;
+  overflow-x: auto;
+  padding: 0.15rem 0;
+  scrollbar-width: none;
+}
+.mp-scroll::-webkit-scrollbar { display: none; }
+
+.mp-pill {
+  padding: 0.5rem 0.9rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--r-full);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.15s;
+  min-width: 44px;
+  text-align: center;
+}
+
+.mp-pill:hover {
+  border-color: rgb(var(--brand));
+  color: rgb(var(--brand-dark));
+  background: rgba(var(--brand), 0.05);
+}
+
+.mp-pill.active {
+  background: rgb(var(--brand));
+  color: #fff;
+  border-color: rgb(var(--brand));
+  box-shadow: var(--shadow-brand);
+}

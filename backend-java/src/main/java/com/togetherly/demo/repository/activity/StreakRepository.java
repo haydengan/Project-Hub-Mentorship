@@ -27,4 +27,10 @@ public interface StreakRepository extends JpaRepository<Streak, UUID> {
             "(SELECT a.id FROM Activity a WHERE a.groupId = :groupId) " +
             "ORDER BY s.currentStreak DESC")
     List<Streak> findByGroupIdOrderByCurrentStreakDesc(@Param("groupId") UUID groupId);
+
+    /** All streaks for all activities in a group, ordered by total minutes descending. */
+    @Query("SELECT s FROM Streak s WHERE s.activityId IN " +
+            "(SELECT a.id FROM Activity a WHERE a.groupId = :groupId) " +
+            "ORDER BY s.totalMinutes DESC")
+    List<Streak> findByGroupIdOrderByTotalMinutesDesc(@Param("groupId") UUID groupId);
 }

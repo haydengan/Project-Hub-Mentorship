@@ -60,7 +60,7 @@ public class ActivityServiceImpl implements ActivityService {
         activity.setType(type);
         activity.setGroupId(groupId);
         activity.setCreatedBy(userId);
-        activityRepository.save(activity);
+        activityRepository.saveAndFlush(activity);
 
         return ActivityResponse.from(activity);
     }
@@ -80,7 +80,7 @@ public class ActivityServiceImpl implements ActivityService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public ActivityLogResponse logActivity(UUID userId, UUID activityId,
-                                            int durationMins, String note)
+                                            int durationMins, String note, String mediaUrl)
             throws NotFound, InvalidOperation, AlreadyExist {
         Activity activity = activityRepository.findById(activityId)
                 .orElseThrow(() -> new NotFound("activity not found !"));
@@ -90,22 +90,17 @@ public class ActivityServiceImpl implements ActivityService {
 
         LocalDate today = LocalDate.now();
 
-        // One log per activity per day
-        if (activityLogRepository.findByUserIdAndActivityIdAndLoggedDate(
-                userId, activityId, today).isPresent()) {
-            throw new AlreadyExist("you already logged this activity today !");
-        }
-
         ActivityLog log = new ActivityLog();
         log.setUserId(userId);
         log.setActivityId(activityId);
         log.setDurationMins(durationMins);
         log.setNote(note);
+        log.setMediaUrl(mediaUrl);
         log.setLoggedDate(today);
-        activityLogRepository.save(log);
+        activityLogRepository.saveAndFlush(log);
 
-        // Update streak in the same transaction
-        streakService.updateStreak(userId, activityId, today);
+        // Update streak and total minutes in the same transaction
+        streakService.updateStreak(userId, activityId, today, durationMins);
 
         return ActivityLogResponse.from(log);
     }

@@ -41,6 +41,9 @@ public class Streak extends Base {
     @Column(nullable = false)
     private int longestStreak = 0;
 
+    @Column(nullable = false)
+    private long totalMinutes = 0;
+
     @Column(name = "last_logged_date")
     private LocalDate lastLoggedDate;
 

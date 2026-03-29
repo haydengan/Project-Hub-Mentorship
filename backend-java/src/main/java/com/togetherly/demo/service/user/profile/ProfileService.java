@@ -2,6 +2,7 @@ package com.togetherly.demo.service.user.profile;
 
 import com.togetherly.demo.data.PageList;
 import com.togetherly.demo.data.user.UserProfile;
+import com.togetherly.demo.exception.AlreadyExist;
 import com.togetherly.demo.exception.UserDoesNotExist;
 import java.util.List;
 
@@ -23,4 +24,8 @@ public interface ProfileService {
 
     /** Get user profiles with pagination. */
     PageList<UserProfile> getAllUserProfilesWithPage(int page, int size);
+
+    /** Update a user's username. */
+    void updateUsername(String userId, String newUsername)
+            throws UserDoesNotExist, AlreadyExist;
 }

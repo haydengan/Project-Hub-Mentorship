@@ -9,6 +9,7 @@ import SuccessPage from './pages/SuccessPage'
 import GroupDetailPage from './pages/GroupDetailPage'
 import CreateGroupPage from './pages/CreateGroupPage'
 import JoinGroupPage from './pages/JoinGroupPage'
+import ProfilePage from './pages/ProfilePage'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Route path="/reset-password" element={<ResetPasswordPage />} />
       <Route path="/success" element={<SuccessPage />} />
       <Route path="/" element={<DashboardPage />} />
+      <Route path="/profile" element={<ProfilePage />} />
       <Route path="/groups/create" element={<CreateGroupPage />} />
       <Route path="/groups/join" element={<JoinGroupPage />} />
       <Route path="/groups/:groupId" element={<GroupDetailPage />} />

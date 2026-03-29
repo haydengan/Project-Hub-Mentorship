@@ -6,6 +6,7 @@ export interface StreakResponse {
   activityName: string;
   currentStreak: number;
   longestStreak: number;
+  totalMinutes: number;
   lastLoggedDate: string | null;
 }
 
@@ -16,6 +17,7 @@ export interface GroupLeaderboardEntry {
   activityName: string;
   currentStreak: number;
   longestStreak: number;
+  totalMinutes: number;
 }
 
 export async function getMyStreaks(): Promise<StreakResponse[]> {

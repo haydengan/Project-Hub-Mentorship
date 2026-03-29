@@ -62,16 +62,27 @@ public class JwtUtil {
             if (!"access_token".equals(data.type())) {
                 throw new InvalidTokenException("invalid token !");
             }
+            Role role = null;
+            for (Role r : Role.values()) {
+                if (r.toString().equals(data.role())) {
+                    role = r;
+                    break;
+                }
+            }
+            if (role == null) {
+                throw new InvalidTokenException("invalid token !");
+            }
             return new UserDetail(
                     data.id(),
                     data.username(),
                     data.isActive(),
-                    Role.valueOf(data.role()),
+                    role,
                     token,
                     data.jti());
         } catch (InvalidTokenException e) {
             throw e;
         } catch (Exception e) {
+            System.err.println("[JWT PARSE] Real error: " + e.getClass().getName() + " - " + e.getMessage());
             throw new InvalidTokenException("invalid token !");
         }
     }
