@@ -34,17 +34,13 @@ export default function SignUpPage() {
 
     setLoading(true);
     try {
-      const res = await client.post('/api/auth/issueVerificationCode', { email });
-      const verificationKey: string = res.data.key;
-
-      navigate('/verify-code', {
-        state: {
-          username: fullName,
-          email,
-          password,
-          verificationKey,
-        },
+      await client.post('/api/auth/quickRegister', {
+        username: fullName,
+        password,
+        email,
+        verification: { key: '', code: '' },
       });
+      navigate('/login', { state: { registered: true } });
     } catch (err: unknown) {
       if (
         err !== null &&

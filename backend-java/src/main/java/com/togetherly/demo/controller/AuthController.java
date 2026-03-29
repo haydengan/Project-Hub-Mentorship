@@ -300,6 +300,21 @@ public class AuthController {
         }
     }
 
+    // --- QUICK REGISTER (no email verification) ---
+
+    @RequestMapping(path = "/api/auth/quickRegister", method = RequestMethod.POST)
+    public ResponseEntity<?> quickRegister(@Valid @RequestBody RegisterRequest request) {
+        try {
+            User user = registrationService.createUser(
+                    request.username(), request.password(),
+                    request.email(), com.togetherly.demo.model.auth.Role.NORMAL);
+            return ResponseEntity.ok(UserProfile.from(user));
+        } catch (AlreadyExist e) {
+            return new ResponseEntity<>(
+                    new ErrorMessageResponse(e.getMessage()), HttpStatus.FORBIDDEN);
+        }
+    }
+
     // --- ISSUE VERIFICATION CODE ---
 
     @Operation(summary = "send verification code to email",
