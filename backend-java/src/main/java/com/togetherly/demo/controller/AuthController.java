@@ -303,11 +303,18 @@ public class AuthController {
     // --- QUICK REGISTER (no email verification) ---
 
     @RequestMapping(path = "/api/auth/quickRegister", method = RequestMethod.POST)
-    public ResponseEntity<?> quickRegister(@Valid @RequestBody RegisterRequest request) {
+    public ResponseEntity<?> quickRegister(@RequestBody java.util.Map<String, String> body) {
         try {
+            String username = body.get("username");
+            String email = body.get("email");
+            String password = body.get("password");
+            if (username == null || email == null || password == null) {
+                return new ResponseEntity<>(
+                        new ErrorMessageResponse("username, email and password are required"),
+                        HttpStatus.BAD_REQUEST);
+            }
             User user = registrationService.createUser(
-                    request.username(), request.password(),
-                    request.email(), com.togetherly.demo.model.auth.Role.NORMAL);
+                    username, password, email, com.togetherly.demo.model.auth.Role.NORMAL);
             return ResponseEntity.ok(UserProfile.from(user));
         } catch (AlreadyExist e) {
             return new ResponseEntity<>(

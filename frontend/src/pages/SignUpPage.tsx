@@ -38,7 +38,6 @@ export default function SignUpPage() {
         username: fullName,
         password,
         email,
-        verification: { key: '', code: '' },
       });
       navigate('/login', { state: { registered: true } });
     } catch (err: unknown) {
